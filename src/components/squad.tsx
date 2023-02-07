@@ -1,17 +1,20 @@
 import { Action, ActionPanel, Grid, Icon } from "@raycast/api";
 import { useEffect, useState } from "react";
 import { getSquad } from "../api";
-import { SquadGroup, Squad, Team } from "../types";
+import { SquadGroup, Squad } from "../types";
 import Player from "./player";
 
-export default function ClubSquad(props: Team) {
+export default function ClubSquad(props: {
+  team_name: string;
+  season: string;
+}) {
   const [playerGroups, setPlayerGroups] = useState<SquadGroup | undefined>();
   const [loading, setLoading] = useState<boolean>(false);
   useEffect(() => {
     setLoading(true);
     setPlayerGroups(undefined);
 
-    getSquad("JUVE").then((data) => {
+    getSquad(props.team_name, props.season).then((data) => {
       setPlayerGroups(data);
       setLoading(false);
     });

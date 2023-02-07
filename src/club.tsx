@@ -8,7 +8,7 @@ import ClubSquad from "./components/squad";
 
 export default function Club() {
   const [clubs, setClubs] = useState<Team[]>();
-  const [season, setSeason] = useState<string>(Object.values(seasons)[0]);
+  const [season, setSeason] = useState<string>(seasons[0]);
 
   useEffect(() => {
     if (season) {
@@ -39,7 +39,7 @@ export default function Club() {
                 <Action.Push
                   title="Club Squads"
                   icon={Icon.Sidebar}
-                  target={<ClubSquad {...club} />}
+                  target={<ClubSquad {...club} season={season} />}
                 />
               </ActionPanel>
             }

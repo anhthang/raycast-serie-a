@@ -1,6 +1,7 @@
 import {
   Action,
   ActionPanel,
+  getPreferenceValues,
   Icon,
   List,
   showToast,
@@ -12,13 +13,15 @@ import SeasonDropdown, { seasons } from "./components/season_dropdown";
 import { Match, Matchday } from "./types";
 import { getCurrentGameWeek, getMatches } from "./api";
 
+const { language } = getPreferenceValues();
+
 interface FixturesAndResults {
   [key: string]: Match[];
 }
 
 export default function Fixture() {
   const [matches, setMatches] = useState<FixturesAndResults>();
-  const [season, setSeason] = useState<string>(Object.values(seasons)[0]);
+  const [season, setSeason] = useState<string>(seasons[0]);
   const [matchday, setMatchday] = useState<Matchday>();
 
   useEffect(() => {
@@ -88,7 +91,7 @@ export default function Fixture() {
                   actions={
                     <ActionPanel>
                       <Action.OpenInBrowser
-                        url={`https://www.legaseriea.it/en/match/${match.slug}`}
+                        url={`https://www.legaseriea.it/${language}${match.slug}`}
                       />
                       {/* {matchday > 1 && (
                         <Action

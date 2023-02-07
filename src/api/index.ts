@@ -1,5 +1,5 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { getPreferenceValues, showToast, Toast } from "@raycast/api";
+import { Cache, getPreferenceValues, showToast, Toast } from "@raycast/api";
 import {
   Match,
   Matchday,
@@ -16,6 +16,7 @@ import {
 } from "../types";
 
 const { language } = getPreferenceValues();
+const cache = new Cache();
 
 function showFailureToast() {
   showToast(
@@ -28,11 +29,12 @@ function showFailureToast() {
 const endpoint = "https://www.legaseriea.it/api";
 
 export const getCurrentGameWeek = async (
-  seasonId: string
+  season: string
 ): Promise<Matchday[]> => {
+  const [title, season_id] = season.split("_");
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/season/${seasonId}/championship/A/matchday?lang=${language}`,
+    url: `${endpoint}/season/${season_id}/championship/A/matchday?lang=${language}`,
   };
 
   try {
@@ -88,13 +90,25 @@ export const getTeams = async (season: string): Promise<Team[]> => {
 // };
 
 export const getStandings = async (season: string): Promise<Standing[]> => {
+  const [title, season_id] = season.split("_");
+
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/stats/live/Classificacompleta?CAMPIONATO=A&STAGIONE=${season}&TURNO=UNICO&GIRONE=UNI`,
+    url: `${endpoint}/stats/live/Classificacompleta?CAMPIONATO=A&STAGIONE=${title}&TURNO=UNICO&GIRONE=UNI`,
   };
 
   try {
     const { data }: AxiosResponse<SerieATable> = await axios(config);
+
+    const squadCodes = data.data.reduce(
+      (out: { [key: string]: string }, cur) => {
+        out[cur.Nome] = cur.CODSQUADRA;
+        return out;
+      },
+      {}
+    );
+
+    cache.set(season, JSON.stringify(squadCodes));
 
     return data.data;
   } catch (e) {
@@ -108,9 +122,11 @@ export const getMatches = async (
   season: string,
   matchday: number
 ): Promise<Match[]> => {
+  const [title, season_id] = season.split("_");
+
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/stats/live/match?extra_link=&order=oldest&lang=en&season_id=${season}&match_day_id=${matchday}`,
+    url: `${endpoint}/stats/live/match?extra_link=&order=oldest&lang=en&season_id=${season_id}&match_day_id=${matchday}`,
   };
 
   try {
@@ -125,14 +141,26 @@ export const getMatches = async (
 };
 
 export const getSquad = async (
-  team: string
+  team_name: string,
+  season: string
 ): Promise<SquadGroup | undefined> => {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: `${endpoint}/team/${team}/players`,
-  };
-
   try {
+    const [title, seasonId] = season.split("_");
+
+    const hasCache = cache.has(team_name);
+    if (!hasCache) {
+      await getStandings(title);
+    }
+
+    const squadCodes = cache.get(title);
+    if (!squadCodes) return undefined;
+
+    const teamCode = JSON.parse(squadCodes)[team_name];
+    const config: AxiosRequestConfig = {
+      method: "GET",
+      url: `${endpoint}/team/${teamCode}/players`,
+    };
+
     const { data }: AxiosResponse<SerieASquad> = await axios(config);
 
     return data.data;
