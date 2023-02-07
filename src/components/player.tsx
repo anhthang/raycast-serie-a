@@ -43,8 +43,8 @@ export default function Player(props: Squad) {
     });
   }, [props.netco_id]);
 
-  return (
-    player && <Detail
+  return player ? (
+    <Detail
       navigationTitle={`${player.CognomeNomeXL} | Profile & Stats`}
       isLoading={loading}
       markdown={json2md([
@@ -94,5 +94,7 @@ export default function Player(props: Squad) {
         </ActionPanel>
       }
     />
+  ) : (
+    <Detail navigationTitle={`${props.short_name} | Profile & Stats`} />
   );
 }

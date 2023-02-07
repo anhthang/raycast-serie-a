@@ -154,7 +154,7 @@ export const getPlayer = async (
   try {
     const { data }: AxiosResponse<SerieAPlayer> = await axios(config);
 
-    return data.data[0];
+    return data.data.reverse()[0];
   } catch (e) {
     showFailureToast();
 

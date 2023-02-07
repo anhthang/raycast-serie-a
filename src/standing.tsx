@@ -37,12 +37,12 @@ export default function GetTables() {
         //   tintColor: Color.SecondaryText,
         // };
 
-        // if (team.position < team.previous_position) {
+        // if (team.PosCls < team.Perse) {
         //   icon = {
         //     source: Icon.ChevronUp,
         //     tintColor: Color.Green,
         //   };
-        // } else if (team.position > team.previous_position) {
+        // } else if (team.PosCls > team.Perse) {
         //   icon = {
         //     source: Icon.ChevronDown,
         //     tintColor: Color.Red,
@@ -82,47 +82,47 @@ export default function GetTables() {
             subtitle={team.Nome}
             keywords={[team.Nome, team.NomeCompleto, team.NomeSintetico]}
             accessories={accessories}
-            // detail={
-            //   <List.Item.Detail
-            //     metadata={
-            //       <List.Item.Detail.Metadata>
-            //         <List.Item.Detail.Metadata.Label title="Stats" />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Previous Position"
-            //           text={team.previous_position.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Played"
-            //           text={team.played.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Won"
-            //           text={team.won.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Drawn"
-            //           text={team.drawn.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Lost"
-            //           text={team.lost.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Goals For"
-            //           text={team.goals_for.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Goals Against"
-            //           text={team.goals_against.toString()}
-            //         />
-            //         <List.Item.Detail.Metadata.Label
-            //           title="Goal Difference"
-            //           text={team.goal_difference.toString()}
-            //         />
-            //       </List.Item.Detail.Metadata>
-            //     }
-            //   />
-            // }
+            detail={
+              <List.Item.Detail
+                metadata={
+                  <List.Item.Detail.Metadata>
+                    <List.Item.Detail.Metadata.Label title="Stats" />
+                    <List.Item.Detail.Metadata.Label
+                      title="Previous Position"
+                      text={team.Perse.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Played"
+                      text={team.Giocate.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Won"
+                      text={team.Vinte.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Drawn"
+                      text={team.Pareggiate.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Lost"
+                      text={team.Perse.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Goals For"
+                      text={team.RETIFATTE.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Goals Against"
+                      text={team.RETISUBITE.toString()}
+                    />
+                    <List.Item.Detail.Metadata.Label
+                      title="Goal Difference"
+                      text={(team.RETIFATTE - team.RETISUBITE).toString()}
+                    />
+                  </List.Item.Detail.Metadata>
+                }
+              />
+            }
             actions={
               <ActionPanel>
                 <Action

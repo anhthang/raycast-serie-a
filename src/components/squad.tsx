@@ -31,8 +31,7 @@ export default function ClubSquad(props: Team) {
                 return (
                   <Grid.Item
                     key={member.player_id}
-                    title={member.name}
-                    subtitle={member.role}
+                    title={member.short_name}
                     content={{
                       source: member.medium_shot,
                       fallback: "player_placeholder.png",
