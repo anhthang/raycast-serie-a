@@ -69,26 +69,6 @@ export const getTeams = async (season: string): Promise<Team[]> => {
   }
 };
 
-// export const getTeam = async (team: string) => {
-//   const config: AxiosRequestConfig = {
-//     method: "GET",
-//     url: `${endpoint}/teams/${team}`,
-//     headers: {
-//       "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
-//     },
-//   };
-
-//   try {
-//     const { data }: AxiosResponse<LaLigaClub> = await axios(config);
-
-//     return data.team;
-//   } catch (e) {
-//     showFailureToast();
-
-//     return undefined;
-//   }
-// };
-
 export const getStandings = async (season: string): Promise<Standing[]> => {
   const [title, season_id] = season.split("_");
 

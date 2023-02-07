@@ -1,5 +1,4 @@
 import { Action, ActionPanel, Detail, getPreferenceValues } from "@raycast/api";
-import { format } from "date-fns";
 import json2md from "json2md";
 import { useEffect, useState } from "react";
 import { getPlayer } from "../api";
