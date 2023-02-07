@@ -1,15 +1,21 @@
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { showToast, Toast } from "@raycast/api";
+import { getPreferenceValues, showToast, Toast } from "@raycast/api";
 import {
   Match,
   Matchday,
+  SquadGroup,
   SerieAFixtureAndResult,
   SerieAMatchday,
+  SerieASquad,
   SerieATable,
   SerieATeams,
   Standing,
   Team,
+  Player,
+  SerieAPlayer,
 } from "../types";
+
+const { language } = getPreferenceValues();
 
 function showFailureToast() {
   showToast(
@@ -26,7 +32,7 @@ export const getCurrentGameWeek = async (
 ): Promise<Matchday[]> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/season/${seasonId}/championship/A/matchday?lang=en`,
+    url: `${endpoint}/season/${seasonId}/championship/A/matchday?lang=${language}`,
   };
 
   try {
@@ -61,25 +67,25 @@ export const getTeams = async (season: string): Promise<Team[]> => {
   }
 };
 
-export const getTeam = async (team: string) => {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: `${endpoint}/teams/${team}`,
-    headers: {
-      "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
-    },
-  };
+// export const getTeam = async (team: string) => {
+//   const config: AxiosRequestConfig = {
+//     method: "GET",
+//     url: `${endpoint}/teams/${team}`,
+//     headers: {
+//       "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
+//     },
+//   };
 
-  try {
-    const { data }: AxiosResponse<LaLigaClub> = await axios(config);
+//   try {
+//     const { data }: AxiosResponse<LaLigaClub> = await axios(config);
 
-    return data.team;
-  } catch (e) {
-    showFailureToast();
+//     return data.team;
+//   } catch (e) {
+//     showFailureToast();
 
-    return undefined;
-  }
-};
+//     return undefined;
+//   }
+// };
 
 export const getStandings = async (season: string): Promise<Standing[]> => {
   const config: AxiosRequestConfig = {
@@ -118,30 +124,40 @@ export const getMatches = async (
   }
 };
 
-export const getSquad = async (team: string): Promise<Squad[]> => {
+export const getSquad = async (
+  team: string
+): Promise<SquadGroup | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/teams/${team}/squad-manager`,
-    params: {
-      limit: 50,
-      offset: 0,
-      orderField: "id",
-      orderType: "DESC",
-      seasonYear: "2021",
-    },
-    headers: {
-      "Ocp-Apim-Subscription-Key": "c13c3a8e2f6b46da9c5c425cf61fab3e",
-      "Content-Language": "en",
-    },
+    url: `${endpoint}/team/${team}/players`,
   };
 
   try {
-    const { data }: AxiosResponse<LaLigaClubSquad> = await axios(config);
+    const { data }: AxiosResponse<SerieASquad> = await axios(config);
 
-    return data.squads;
+    return data.data;
   } catch (e) {
     showFailureToast();
 
-    return [];
+    return undefined;
+  }
+};
+
+export const getPlayer = async (
+  player_id: string
+): Promise<Player | undefined> => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `${endpoint}/stats/Rosasquadra?CAMPIONATO=*&STAGIONE=*&CODGIOCATORE=${player_id}`,
+  };
+
+  try {
+    const { data }: AxiosResponse<SerieAPlayer> = await axios(config);
+
+    return data.data[0];
+  } catch (e) {
+    showFailureToast();
+
+    return undefined;
   }
 };

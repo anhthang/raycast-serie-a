@@ -4,10 +4,11 @@ import { getTeams } from "./api";
 import SeasonDropdown, { seasons } from "./components/season_dropdown";
 import { Action, ActionPanel, Grid, Icon } from "@raycast/api";
 import ClubDetails from "./components/club";
+import ClubSquad from "./components/squad";
 
 export default function Club() {
   const [clubs, setClubs] = useState<Team[]>();
-  const [season, setSeason] = useState<string>(Object.keys(seasons)[0]);
+  const [season, setSeason] = useState<string>(Object.values(seasons)[0]);
 
   useEffect(() => {
     if (season) {
@@ -36,9 +37,9 @@ export default function Club() {
             actions={
               <ActionPanel>
                 <Action.Push
-                  title="Club Profile"
+                  title="Club Squads"
                   icon={Icon.Sidebar}
-                  target={<ClubDetails {...club} />}
+                  target={<ClubSquad {...club} />}
                 />
               </ActionPanel>
             }

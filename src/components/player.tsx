@@ -1,7 +1,11 @@
-import { Action, ActionPanel, Detail } from "@raycast/api";
+import { Action, ActionPanel, Detail, getPreferenceValues } from "@raycast/api";
 import { format } from "date-fns";
 import json2md from "json2md";
-import { Squad } from "../types";
+import { useEffect, useState } from "react";
+import { getPlayer } from "../api";
+import { Player, Squad } from "../types";
+
+const { language } = getPreferenceValues();
 
 const getFlagEmoji = (isoCode?: string) => {
   if (!isoCode) return "🏴";
@@ -25,15 +29,29 @@ const getFlagEmoji = (isoCode?: string) => {
     .replace(/./g, (char) => String.fromCodePoint(127397 + char.charCodeAt(0)));
 };
 
-export default function Player(squad: Squad) {
+export default function Player(props: Squad) {
+  const [player, setPlayer] = useState<Player>();
+  const [loading, setLoading] = useState<boolean>(false);
+
+  useEffect(() => {
+    setPlayer(undefined);
+    setLoading(true);
+
+    getPlayer(props.netco_id).then((data) => {
+      setPlayer(data);
+      setLoading(false);
+    });
+  }, [props.netco_id]);
+
   return (
-    <Detail
-      navigationTitle={`${squad.person.name} | Profile & Stats`}
+    player && <Detail
+      navigationTitle={`${player.CognomeNomeXL} | Profile & Stats`}
+      isLoading={loading}
       markdown={json2md([
-        { h1: squad.person.name },
+        { h1: player.CognomeNomeXL },
         {
           img: {
-            source: squad.photos["001"]["512x556"],
+            source: player.player_medium_shot,
           },
         },
       ])}
@@ -41,37 +59,37 @@ export default function Player(squad: Squad) {
         <Detail.Metadata>
           <Detail.Metadata.Label
             title="Nationality"
-            icon={getFlagEmoji(squad.person.country?.id)}
-            text={squad.person.country?.id}
+            icon={getFlagEmoji(player.Nazionalita)}
+            text={player.Nazionalita}
           />
           <Detail.Metadata.Label
             title="Date of Birth"
-            text={format(new Date(squad.person.date_of_birth), "dd/MM/yyyy")}
+            text={player.DataNascita}
           />
-          <Detail.Metadata.Label
+          {/* <Detail.Metadata.Label
             title="Place of Birth"
-            text={squad.person.place_of_birth}
+            text={player.person.place_of_birth}
           />
           <Detail.Metadata.Label
             title="Height (cm)"
-            text={squad.person.height?.toString()}
+            text={player.person.height.toString()}
           />
           <Detail.Metadata.Label
             title="Weight (kg)"
-            text={squad.person.weight?.toString()}
-          />
+            text={player.person.weight.toString()}
+          /> */}
           <Detail.Metadata.Separator />
-          <Detail.Metadata.Label title="Position" text={squad.position.name} />
+          <Detail.Metadata.Label title="Position" text={player.Ruolo} />
           <Detail.Metadata.Label
             title="Shirt Number"
-            text={squad.shirt_number?.toString()}
+            text={player.NUMEROMAGLIA.toString()}
           />
         </Detail.Metadata>
       }
       actions={
         <ActionPanel>
           <Action.OpenInBrowser
-            url={`https://www.laliga.com/en-GB/player/$${squad.person.slug}`}
+            url={`https://www.legaseriea.it/${language}/$${player.player_slug}`}
           />
         </ActionPanel>
       }

@@ -18,7 +18,7 @@ interface FixturesAndResults {
 
 export default function Fixture() {
   const [matches, setMatches] = useState<FixturesAndResults>();
-  const [season, setSeason] = useState<string>(Object.keys(seasons)[0]);
+  const [season, setSeason] = useState<string>(Object.values(seasons)[0]);
   const [matchday, setMatchday] = useState<Matchday>();
 
   useEffect(() => {
@@ -27,10 +27,11 @@ export default function Fixture() {
       setMatches(undefined);
 
       getCurrentGameWeek(season).then((data) => {
-        console.log("data", season, data);
         const currentDay = data.find((d) => d.category_status === "LIVE");
         if (currentDay) {
           setMatchday(currentDay);
+        } else {
+          setMatchday(data.reverse()[0]);
         }
       });
     }

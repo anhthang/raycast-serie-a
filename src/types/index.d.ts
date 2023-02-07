@@ -22,6 +22,30 @@ export interface SerieAMatchday {
   code: number;
 }
 
+export interface SerieATeams {
+  success: boolean;
+  message: string;
+  errors: any[];
+  data: Teams;
+  code: number;
+}
+
+export interface SerieASquad {
+  success: boolean;
+  message: string;
+  errors: any[];
+  data: SquadGroup;
+  code: number;
+}
+
+export interface SerieAPlayer {
+  success: boolean;
+  message: string;
+  errors: any[];
+  data: Player[];
+  code: number;
+}
+
 export interface Matchday {
   id_category: number;
   title: string;
@@ -154,14 +178,6 @@ export interface Match {
   weather: string;
 }
 
-export interface SerieATeams {
-  success: boolean;
-  message: string;
-  errors: any[];
-  data: Teams;
-  code: number;
-}
-
 export interface Teams {
   name: string;
   type: string;
@@ -182,4 +198,110 @@ export interface Pagination {
   _total: number;
   subtitle: string;
   title: string;
+}
+
+export interface SquadGroup {
+  A: Squad[];
+  C: Squad[];
+  D: Squad[];
+  P: Squad[];
+}
+
+export interface Squad {
+  player_id: number;
+  slug: string;
+  name: string;
+  surname: string;
+  surname_full: string;
+  short_name: string;
+  category_season_id: number;
+  birth_day: Date;
+  image: string;
+  medium_shot: string;
+  head_shot: string;
+  uniform_number: number;
+  nationality: string;
+  team_id: number;
+  formation: number;
+  cod_role: CodRole;
+  role: Role;
+  visible: boolean;
+  netco_id: string;
+  opta_id: string;
+  active: boolean;
+  georule_id: number;
+  status: Status;
+  iso3: string;
+  team_name: string;
+  team_logo: string;
+}
+
+export enum CodRole {
+  A = "A",
+  C = "C",
+  D = "D",
+  P = "P",
+}
+
+export enum Role {
+  Attaccante = "Attaccante",
+  Centrocampista = "Centrocampista",
+  Difensore = "Difensore",
+  Portiere = "Portiere",
+}
+
+export interface Player {
+  ALLAGIORNATA: number;
+  Ammonizioni: number;
+  Attacchi: number;
+  CAMPIONATO: Campionato;
+  CODGIOCATORE: Codgiocatore;
+  CODRUOLO: Codruolo;
+  CODSQUADRA: Codsquadra;
+  Cognome: Cognome;
+  CognomeNomeXL: CognomeNomeXL;
+  DOPPIEAMMONI: number;
+  DataNascita: DataNascita;
+  Diffidato: number;
+  EspulTot: number;
+  Espulsioni: number;
+  IDOptaGiocatore: IDOptaGiocatore;
+  IMMAGIGIOCAT: Immagigiocat;
+  MINUTI: number;
+  MVPMese: string;
+  MVPMeseENG: string;
+  NAssist: number;
+  NAssistVin: number;
+  NUMEROMAGLIA: string;
+  Nazionalita: Nazionalita;
+  Nome: Nome;
+  NomeInFormazione: NomeInFormazione;
+  OccasioniDaGol: number;
+  PALLERECUPER: number;
+  Parate: number;
+  ParateDe: number;
+  PassChiave: number;
+  Presenze: number;
+  ROSA: number;
+  Reti: number;
+  RetiSuRigore: number;
+  RetiSubite: number;
+  Ruolo: Ruolo;
+  STAGIONE: string;
+  Squadra: Squadra;
+  Squalificato?: number;
+  TIRI: number;
+  do_deleted: number;
+  do_inserted: number;
+  do_loaded: number;
+  do_updated: number;
+  player_active: string;
+  player_head_shot: string;
+  player_image: string;
+  player_medium_shot: string;
+  player_slug: PlayerSlug;
+  team_active: string;
+  team_image: string;
+  team_image_secondary: string;
+  team_slug: TeamSlug;
 }

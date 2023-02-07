@@ -6,7 +6,7 @@ import { Standing } from "./types";
 
 export default function GetTables() {
   const [standing, setStandings] = useState<Standing[]>();
-  const [season, setSeason] = useState<string>(Object.values(seasons)[0]);
+  const [season, setSeason] = useState<string>(Object.keys(seasons)[0]);
   const [showStats, setShowStats] = useState<boolean>(false);
 
   useEffect(() => {
@@ -23,7 +23,11 @@ export default function GetTables() {
       throttle
       isLoading={!standing}
       searchBarAccessory={
-        <SeasonDropdown selected={season} onSelect={setSeason} />
+        <SeasonDropdown
+          useTitle={true}
+          selected={season}
+          onSelect={setSeason}
+        />
       }
       isShowingDetail={showStats}
     >

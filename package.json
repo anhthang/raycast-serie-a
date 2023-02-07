@@ -1,8 +1,8 @@
 {
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "serie-a",
-  "title": "Serie A",
-  "description": "All the information of LaLiga Santander, LaLiga SmartBank, and Primera División Femenina: schedules, results, standings, news, statistics, and much more",
+  "title": "Lega Serie A",
+  "description": "La massima serie in Italia, le venti migliore squadre, classifica, risultati, statistiche, video e foto uniche. Tutto sul nuovo sito a tua disposizione",
   "icon": "icon.png",
   "author": "anhthang",
   "license": "MIT",
@@ -14,22 +14,42 @@
       "name": "standing",
       "title": "Standings",
       "subtitle": "Lega Serie A",
-      "description": "Discover the standing table of the LaLiga competitons. Find out the ranking of your favorite team this season.",
+      "description": "La classifica sempre aggiornata in base agli ultimi risultati delle venti miogliori squadre italiane, statistiche e approfondimenti a tua disposizione.",
       "mode": "view"
     },
     {
       "name": "result",
       "title": "Fixtures & Results",
       "subtitle": "Lega Serie A",
-      "description": "Find out the results of the last round of LaLiga and the previous ones of LaLiga.",
+      "description": "Tutti gli ultimi risultati di tutte le giornate del campionato di Serie A sempre aggiornati, segui tutti i match con il live commentary.",
       "mode": "view"
     },
     {
       "name": "club",
       "title": "Clubs",
       "subtitle": "Lega Serie A",
-      "description": "Clubs and Teams of LaLiga.",
+      "description": "Clubs and Teams of Lega Serie A",
       "mode": "view"
+    }
+  ],
+  "preferences": [
+    {
+      "name": "language",
+      "title": "Language",
+      "description": "Your preferred language.",
+      "required": false,
+      "type": "dropdown",
+      "default": "en",
+      "data": [
+        {
+          "title": "English",
+          "value": "en"
+        },
+        {
+          "title": "Italian",
+          "value": "it"
+        }
+      ]
     }
   ],
   "dependencies": {

@@ -2,10 +2,10 @@
   <img src="assets/icon.png" height="128">
 </p>
 
-All the information of LaLiga Santander, LaLiga SmartBank, and Primera División Femenina: schedules, results, standings, news, statistics, and much more in [Raycast](https://raycast.com/)
+Lega Serie A | La massima serie in Italia, le venti migliore squadre, classifica, risultati, statistiche, video e foto uniche. Tutto sul nuovo sito a tua disposizione.
 
-![Example](./metadata/laliga-01.png)
+![Example](./metadata/serie-a-1.png)
 
 ## Issues
 
-[Track here](https://github.com/anhthang/raycast-laliga/issues) or create an issue.
+[Track here](https://github.com/anhthang/raycast-serie-a/issues) or create an issue.
