@@ -28,9 +28,7 @@ function showFailureToast() {
 
 const endpoint = "https://www.legaseriea.it/api";
 
-export const getCurrentGameWeek = async (
-  season: string
-): Promise<Matchday[]> => {
+export const getMatchday = async (season: string): Promise<Matchday[]> => {
   const [title, season_id] = season.split("_");
   const config: AxiosRequestConfig = {
     method: "GET",

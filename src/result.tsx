@@ -11,7 +11,7 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import SeasonDropdown, { seasons } from "./components/season_dropdown";
 import { Match, Matchday } from "./types";
-import { getCurrentGameWeek, getMatches } from "./api";
+import { getMatchday, getMatches } from "./api";
 
 const { language } = getPreferenceValues();
 
@@ -29,8 +29,11 @@ export default function Fixture() {
       setMatchday(undefined);
       setMatches(undefined);
 
-      getCurrentGameWeek(season).then((data) => {
-        const currentDay = data.find((d) => d.category_status === "LIVE");
+      getMatchday(season).then((data) => {
+        const currentDay = data.find(
+          (d) =>
+            d.category_status === "LIVE" || d.category_status === "TO BE PLAYED"
+        );
         if (currentDay) {
           setMatchday(currentDay);
         } else {
@@ -71,6 +74,29 @@ export default function Fixture() {
         return (
           <List.Section key={label} title={label}>
             {results.map((match) => {
+              let weather;
+              try {
+                weather = JSON.parse(match.weather);
+              } catch (e) {
+                // ignore
+              }
+
+              const accessories: List.Item.Accessory[] = [
+                { text: match.venue_name },
+              ];
+
+              if (weather) {
+                accessories.push({
+                  icon: {
+                    source: {
+                      light: weather.icon_day.image_day,
+                      dark: weather.icon_day.image_night,
+                    },
+                  },
+                  tooltip: weather.icon_description,
+                });
+              }
+
               return (
                 <List.Item
                   key={match.match_id}
@@ -84,14 +110,16 @@ export default function Fixture() {
                       : `${match.home_team_name} - ${match.away_team_name}`
                   }
                   icon={Icon.Clock}
-                  accessories={[
-                    { text: match.venue_name },
-                    { icon: match.venue_image },
-                  ]}
+                  accessories={accessories}
                   actions={
                     <ActionPanel>
                       <Action.OpenInBrowser
                         url={`https://www.legaseriea.it/${language}${match.slug}`}
+                      />
+                      <Action.OpenInBrowser
+                        title="Buy Ticket"
+                        icon={Icon.Store}
+                        url={match.ticket_url}
                       />
                       {/* {matchday > 1 && (
                         <Action

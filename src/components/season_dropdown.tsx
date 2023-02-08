@@ -50,7 +50,7 @@ export default function SeasonDropdown(props: {
 
   return (
     <DropdownComponent
-      tooltip="Filter by Competition"
+      tooltip="Filter by Season"
       value={props.selected}
       onChange={props.onSelect}
     >
