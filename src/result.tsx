@@ -1,8 +1,10 @@
 import {
   Action,
   ActionPanel,
+  Color,
   getPreferenceValues,
   Icon,
+  Image,
   List,
   showToast,
   Toast,
@@ -114,6 +116,15 @@ export default function Fixture() {
                 // ignore
               }
 
+              let icon: Image.ImageLike;
+              if (match.match_status === 1) {
+                icon = { source: Icon.Livestream, tintColor: Color.Red };
+              } else if (match.match_status === 2) {
+                icon = { source: Icon.CheckCircle, tintColor: Color.Green };
+              } else {
+                icon = Icon.Clock;
+              }
+
               return (
                 <List.Item
                   key={match.match_id}
@@ -126,7 +137,7 @@ export default function Fixture() {
                       ? `${match.home_team_name} ${match.home_goal} - ${match.away_goal} ${match.away_team_name}`
                       : `${match.home_team_name} - ${match.away_team_name}`
                   }
-                  icon={Icon.Clock}
+                  icon={icon}
                   accessories={accessories}
                   actions={
                     <ActionPanel>
