@@ -22,14 +22,17 @@ interface FixturesAndResults {
 export default function Fixture() {
   const [matches, setMatches] = useState<FixturesAndResults>();
   const [season, setSeason] = useState<string>(seasons[0]);
+  const [matchdays, setMatchdays] = useState<Matchday[]>([]);
   const [matchday, setMatchday] = useState<Matchday>();
 
   useEffect(() => {
     if (season) {
+      setMatchdays([]);
       setMatchday(undefined);
       setMatches(undefined);
 
       getMatchday(season).then((data) => {
+        setMatchdays(data);
         const currentDay = data.find(
           (d) =>
             d.category_status === "LIVE" || d.category_status === "TO BE PLAYED"
@@ -37,7 +40,7 @@ export default function Fixture() {
         if (currentDay) {
           setMatchday(currentDay);
         } else {
-          setMatchday(data.reverse()[0]);
+          setMatchday(data[data.length - 1]);
         }
       });
     }
@@ -121,15 +124,17 @@ export default function Fixture() {
                         icon={Icon.Store}
                         url={match.ticket_url}
                       />
-                      {/* {matchday > 1 && (
+                      {matchday && Number(matchday.description) > 1 && (
                         <Action
                           title="Load Previous Matchday"
                           icon={Icon.MagnifyingGlass}
                           onAction={() => {
-                            setMatchday(matchday - 1);
+                            setMatchday(
+                              matchdays[Number(matchday.description) - 2]
+                            );
                           }}
                         />
-                      )} */}
+                      )}
                     </ActionPanel>
                   }
                 />
