@@ -119,6 +119,13 @@ export default function Fixture() {
               let icon: Image.ImageLike;
               if (match.match_status === 1) {
                 icon = { source: Icon.Livestream, tintColor: Color.Red };
+
+                accessories.unshift({
+                  tag: {
+                    value: match.live_timing,
+                    color: Color.Red,
+                  },
+                });
               } else if (match.match_status === 2) {
                 icon = { source: Icon.CheckCircle, tintColor: Color.Green };
               } else {
