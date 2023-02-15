@@ -14,15 +14,12 @@ import { format } from "date-fns";
 import SeasonDropdown, { seasons } from "./components/season_dropdown";
 import { Broadcaster, Match, Matchday } from "./types";
 import { getMatchday, getMatches } from "./api";
+import groupBy from "lodash.groupby";
 
 const { language } = getPreferenceValues();
 
-interface FixturesAndResults {
-  [key: string]: Match[];
-}
-
 export default function Fixture() {
-  const [matches, setMatches] = useState<FixturesAndResults>();
+  const [matches, setMatches] = useState<Match[]>();
   const [season, setSeason] = useState<string>(seasons[0]);
   const [matchdays, setMatchdays] = useState<Matchday[]>([]);
   const [matchday, setMatchday] = useState<Matchday>();
@@ -55,30 +52,36 @@ export default function Fixture() {
         style: Toast.Style.Animated,
       });
       getMatches(season, matchday.id_category).then((data) => {
-        setMatches({
-          ...matches,
-          [`${matchday.title}`]: data,
-        });
+        setMatches(data);
         showToast({
-          title: `${matchday.title} Added`,
+          title: "Completed",
           style: Toast.Style.Success,
         });
       });
     }
   }, [matchday]);
 
+  const categories = groupBy(matches, (m) =>
+    format(new Date(m.date_time), "dd MMM yyyy")
+  );
+
   return (
     <List
       throttle
       isLoading={!matches}
+      navigationTitle={
+        matchday
+          ? `${matchday.title} | Fixtures & Results`
+          : "Fixtures & Results"
+      }
       searchBarAccessory={
         <SeasonDropdown selected={season} onSelect={setSeason} />
       }
     >
-      {Object.entries(matches || {}).map(([label, results]) => {
+      {Object.entries(categories).map(([date, fixtures]) => {
         return (
-          <List.Section key={label} title={label}>
-            {results.map((match) => {
+          <List.Section key={date} title={date}>
+            {fixtures.map((match) => {
               const accessories: List.Item.Accessory[] = [
                 { text: match.venue_name },
               ];
@@ -135,10 +138,7 @@ export default function Fixture() {
               return (
                 <List.Item
                   key={match.match_id}
-                  title={format(
-                    new Date(match.date_time),
-                    "dd MMM yyyy - HH:mm"
-                  )}
+                  title={format(new Date(match.date_time), "HH:mm")}
                   subtitle={
                     match.match_status === 2
                       ? `${match.home_team_name} ${match.home_goal} - ${match.away_goal} ${match.away_team_name}`
@@ -148,34 +148,53 @@ export default function Fixture() {
                   accessories={accessories}
                   actions={
                     <ActionPanel>
-                      {match.highlight && (
+                      <ActionPanel.Section title="Match">
+                        {match.highlight && (
+                          <Action.OpenInBrowser
+                            title="Highlights"
+                            icon={Icon.Highlight}
+                            url={`https://www.legaseriea.it/${language}${match.highlight}`}
+                          />
+                        )}
+                        {match.match_status === 0 && (
+                          <Action.OpenInBrowser
+                            title="Buy Ticket"
+                            icon={Icon.Wallet}
+                            url={match.ticket_url}
+                          />
+                        )}
                         <Action.OpenInBrowser
-                          title="Highlights"
-                          icon={Icon.Highlight}
-                          url={`https://www.legaseriea.it/${language}${match.highlight}`}
+                          url={`https://www.legaseriea.it/${language}${match.slug}`}
                         />
-                      )}
-                      {match.match_status === 0 && (
-                        <Action.OpenInBrowser
-                          title="Buy Ticket"
-                          icon={Icon.Wallet}
-                          url={match.ticket_url}
-                        />
-                      )}
-                      <Action.OpenInBrowser
-                        url={`https://www.legaseriea.it/${language}${match.slug}`}
-                      />
-                      {matchday && Number(matchday.description) > 1 && (
-                        <Action
-                          title="Load Previous Matchday"
-                          icon={Icon.MagnifyingGlass}
-                          onAction={() => {
-                            setMatchday(
-                              matchdays[Number(matchday.description) - 2]
-                            );
-                          }}
-                        />
-                      )}
+                      </ActionPanel.Section>
+                      <ActionPanel.Section title="Matchday">
+                        {matchday && Number(matchday.description) > 1 && (
+                          <Action
+                            title={
+                              matchdays[Number(matchday.description) - 2].title
+                            }
+                            icon={Icon.ArrowLeftCircle}
+                            onAction={() => {
+                              setMatchday(
+                                matchdays[Number(matchday.description) - 2]
+                              );
+                            }}
+                          />
+                        )}
+                        {matchday && Number(matchday.description) < 38 && (
+                          <Action
+                            title={
+                              matchdays[Number(matchday.description)].title
+                            }
+                            icon={Icon.ArrowRightCircle}
+                            onAction={() => {
+                              setMatchday(
+                                matchdays[Number(matchday.description)]
+                              );
+                            }}
+                          />
+                        )}
+                      </ActionPanel.Section>
                     </ActionPanel>
                   }
                 />

@@ -2,8 +2,7 @@
 
 ## [Improvements] - 2023
 - Added Club details
-- Previous matchday, broadcasters
-- Live fixtures status
+- Refine Fixtures & Results (live fixtures status, broadcasters)
 
 ## [Initial Version] - 2023-02-10
 
