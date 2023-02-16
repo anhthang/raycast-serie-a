@@ -15,7 +15,7 @@ import {
   SerieAPlayer,
   Club,
 } from "../types";
-import { CoppaRounds, Round } from "../types/coppa";
+import { Championship, CoppaRounds, Round } from "../types/coppa";
 
 const { language } = getPreferenceValues();
 const cache = new Cache();
@@ -180,7 +180,7 @@ export const getPlayer = async (
 export const getClub = async (slug: string): Promise<Club | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `https://www.legaseriea.it/_next/data/sIOZ2yIbsl4I8hp82xokQ/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
+    url: `https://www.legaseriea.it/_next/data/0pQSbyByFdxlm81lnGxQP/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
   };
 
   try {
@@ -206,6 +206,27 @@ export const getCoppaRounds = async (season: string): Promise<Round[]> => {
     const { data }: AxiosResponse<CoppaRounds> = await axios(config);
 
     return data.data;
+  } catch (e) {
+    showFailureToast();
+
+    return [];
+  }
+};
+
+export const getChampionships = async (
+  season: string
+): Promise<Championship[]> => {
+  const [title, seasonId] = season.split("_");
+
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `https://www.legaseriea.it/api/widget/international-championships?season_id=${seasonId}`,
+  };
+
+  try {
+    const { data } = await axios(config);
+
+    return data.data?.body || [];
   } catch (e) {
     showFailureToast();
 

@@ -33,10 +33,16 @@
     },
     {
       "name": "coppa",
-      "title": "Draw",
-      "subtitle": "Coppa Italia",
+      "title": "Coppa Italia",
+      "subtitle": "Lega Serie A",
       "icon": "coppa_icon.png",
       "description": "Follow all the latest Coppa Italia football fixtures and results.",
+      "mode": "view"
+    },
+    {
+      "name": "international",
+      "title": "International Championships",
+      "description": "Follow all the latest Italian teams football fixtures in international championships.",
       "mode": "view"
     }
   ],

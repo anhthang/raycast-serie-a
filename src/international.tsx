@@ -3,32 +3,31 @@ import { useEffect, useState } from "react";
 import { format } from "date-fns";
 import { seasons } from "./components/season_dropdown";
 import { Match } from "./types";
-import { getCoppaRounds, getMatches } from "./api";
+import { getChampionships, getMatches } from "./api";
 import groupBy from "lodash.groupby";
-import { Round } from "./types/coppa";
+import { Championship } from "./types/coppa";
 import Matchday from "./components/matchday";
 
 export default function Fixture() {
   const [matches, setMatches] = useState<Match[]>();
 
-  const [rounds, setRounds] = useState<Round[]>([]);
-  const [roundId, setRoundId] = useState<string>();
+  const [championships, setChampionships] = useState<Championship[]>([]);
+  const [championship, setChampionship] = useState<string>();
 
   useEffect(() => {
-    getCoppaRounds(seasons[0]).then((data) => {
-      const reversed = data.reverse();
-      setRounds(reversed);
-      setRoundId(reversed[0].id_category.toString());
+    getChampionships(seasons[0]).then((data) => {
+      setChampionships(data);
+      setChampionship(data[0].id);
     });
   }, []);
 
   useEffect(() => {
-    if (roundId) {
+    if (championship) {
       showToast({
         title: "Loading...",
         style: Toast.Style.Animated,
       });
-      getMatches(seasons[0], { round_id: roundId }).then((data) => {
+      getMatches(seasons[0], { championship_id: championship }).then((data) => {
         setMatches(data);
         showToast({
           title: "Completed",
@@ -36,7 +35,7 @@ export default function Fixture() {
         });
       });
     }
-  }, [roundId]);
+  }, [championship]);
 
   const categories = groupBy(matches, (m) =>
     format(new Date(m.date_time), "eeee, dd MMM yyyy")
@@ -48,16 +47,16 @@ export default function Fixture() {
       isLoading={!matches}
       searchBarAccessory={
         <List.Dropdown
-          tooltip="Filter by Round"
-          value={roundId}
-          onChange={setRoundId}
+          tooltip="Filter by Championship"
+          value={championship}
+          onChange={setChampionship}
         >
-          {rounds.map((round) => {
+          {championships.map((championship) => {
             return (
               <List.Dropdown.Item
-                key={round.id_category}
-                value={round.id_category.toString()}
-                title={round.title}
+                key={championship.id}
+                value={championship.id}
+                title={championship.value}
               />
             );
           })}

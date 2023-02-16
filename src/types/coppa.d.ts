@@ -32,3 +32,8 @@ export interface Round {
   LanguageCode: string;
   status: string;
 }
+
+export interface Championship {
+  id: string;
+  value: string;
+}
