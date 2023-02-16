@@ -162,7 +162,7 @@ export default function Fixture() {
                           <Action.OpenInBrowser
                             title="Buy Ticket"
                             icon={Icon.Wallet}
-                            url={match.ticket_url}
+                            url={match.ticket_url || match.home_team_ticket_url}
                           />
                         )}
                         <Action.OpenInBrowser
