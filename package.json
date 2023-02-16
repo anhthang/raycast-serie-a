@@ -28,7 +28,15 @@
       "name": "club",
       "title": "Clubs",
       "subtitle": "Lega Serie A",
-      "description": "Clubs and Teams of Lega Serie A.",
+      "description": "View all the clubs engaged in Lega Serie A.",
+      "mode": "view"
+    },
+    {
+      "name": "coppa",
+      "title": "Draw",
+      "subtitle": "Coppa Italia",
+      "icon": "coppa_icon.png",
+      "description": "Follow all the latest Coppa Italia football fixtures and results.",
       "mode": "view"
     }
   ],

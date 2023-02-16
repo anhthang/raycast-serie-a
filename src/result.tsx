@@ -48,16 +48,18 @@ export default function Fixture() {
   useEffect(() => {
     if (matchday) {
       showToast({
-        title: `Getting ${matchday.title}`,
+        title: "Loading...",
         style: Toast.Style.Animated,
       });
-      getMatches(season, matchday.id_category).then((data) => {
-        setMatches(data);
-        showToast({
-          title: "Completed",
-          style: Toast.Style.Success,
-        });
-      });
+      getMatches(season, { match_day_id: matchday.id_category }).then(
+        (data) => {
+          setMatches(data);
+          showToast({
+            title: "Completed",
+            style: Toast.Style.Success,
+          });
+        }
+      );
     }
   }, [matchday]);
 
@@ -142,7 +144,7 @@ export default function Fixture() {
                   subtitle={
                     match.match_status === 2
                       ? `${match.home_team_name} ${match.home_goal} - ${match.away_goal} ${match.away_team_name}`
-                      : `${match.home_team_name} - ${match.away_team_name}`
+                      : match.match_name
                   }
                   icon={icon}
                   accessories={accessories}
