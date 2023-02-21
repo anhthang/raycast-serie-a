@@ -100,7 +100,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
 
 export const getMatches = async (
   season: string,
-  params: any
+  params: object
 ): Promise<Match[]> => {
   const [title, season_id] = season.split("_");
 

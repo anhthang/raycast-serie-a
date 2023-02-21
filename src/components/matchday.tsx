@@ -24,7 +24,8 @@ export default function Matchday(props: PropsType) {
   return (
     <List.Section title={date.endsWith("2099") ? "To be defined" : date}>
       {fixtures.map((match) => {
-        const accessories: List.Item.Accessory[] = [{ text: match.venue_name }];
+        const accessories: List.Item.Accessory[] =
+          match.venue_name === "default" ? [] : [{ text: match.venue_name }];
 
         let broadcasters: Broadcaster[];
         try {
@@ -59,7 +60,9 @@ export default function Matchday(props: PropsType) {
           // ignore
         }
 
-        let icon: Image.ImageLike;
+        const tbc = !match.match_hm || match.match_hm === "00:00:00";
+
+        let icon: Image.ImageLike = Icon.Clock;
         if (match.match_status === 1) {
           icon = { source: Icon.Livestream, tintColor: Color.Red };
 
@@ -71,14 +74,14 @@ export default function Matchday(props: PropsType) {
           });
         } else if (match.match_status === 2) {
           icon = { source: Icon.CheckCircle, tintColor: Color.Green };
-        } else {
-          icon = Icon.Clock;
+        } else if (!tbc) {
+          icon = Icon.Calendar;
         }
 
         return (
           <List.Item
             key={match.match_id}
-            title={format(new Date(match.date_time), "HH:mm")}
+            title={tbc ? "TBC" : format(new Date(match.date_time), "HH:mm")}
             subtitle={
               match.match_status === 2
                 ? `${match.home_team_name} ${match.home_goal} - ${match.away_goal} ${match.away_team_name}`
@@ -106,32 +109,6 @@ export default function Matchday(props: PropsType) {
                   url={`https://www.legaseriea.it/${language}${match.slug}`}
                 />
                 {actionPanel}
-                {/* {matchday && (
-                  <ActionPanel.Section title="Matchday">
-                    {matchday && Number(matchday.description) > 1 && (
-                      <Action
-                        title={
-                          matchdays[Number(matchday.description) - 2].title
-                        }
-                        icon={Icon.ArrowLeftCircle}
-                        onAction={() => {
-                          setMatchday(
-                            matchdays[Number(matchday.description) - 2]
-                          );
-                        }}
-                      />
-                    )}
-                    {matchday && Number(matchday.description) < 38 && (
-                      <Action
-                        title={matchdays[Number(matchday.description)].title}
-                        icon={Icon.ArrowRightCircle}
-                        onAction={() => {
-                          setMatchday(matchdays[Number(matchday.description)]);
-                        }}
-                      />
-                    )}
-                  </ActionPanel.Section>
-                )} */}
               </ActionPanel>
             }
           />
