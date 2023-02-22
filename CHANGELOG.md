@@ -1,9 +1,10 @@
 # Lega Serie A Changelog
 
-## [Improvements] - 2023
+## [Improvements] - 2023-02-21
+
 - Added Club details
 - Refine Fixtures & Results (live fixtures status, broadcasters)
-- Added Coppa Italia
+- Added Coppa Italia & International Competitions
 
 ## [Initial Version] - 2023-02-10
 
