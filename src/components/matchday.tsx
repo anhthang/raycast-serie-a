@@ -89,6 +89,12 @@ export default function Matchday(props: PropsType) {
             }
             icon={icon}
             accessories={accessories}
+            keywords={[
+              match.home_team_name,
+              match.home_team_short_name,
+              match.away_team_name,
+              match.away_team_short_name,
+            ]}
             actions={
               <ActionPanel>
                 {match.highlight && (
