@@ -24,7 +24,7 @@ function showFailureToast() {
   showToast(
     Toast.Style.Failure,
     "Something went wrong",
-    "Please try again later"
+    "Please try again later",
   );
 }
 
@@ -48,13 +48,13 @@ export const getMatchday = async (season: string): Promise<Matchday[]> => {
   }
 };
 
-export const getTeams = async (season: string): Promise<Team[]> => {
+export const getTeams = async (): Promise<Team[]> => {
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/widget/all-teams`,
     params: {
       lang: "en",
-      id_category: "150060",
+      id_category: "157623",
     },
   };
 
@@ -85,7 +85,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
         out[cur.Nome] = cur.CODSQUADRA;
         return out;
       },
-      {}
+      {},
     );
 
     cache.set(season, JSON.stringify(squadCodes));
@@ -100,7 +100,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
 
 export const getMatches = async (
   season: string,
-  params: object
+  params: object,
 ): Promise<Match[]> => {
   const [title, season_id] = season.split("_");
 
@@ -129,7 +129,7 @@ export const getMatches = async (
 
 export const getSquad = async (
   team_name: string,
-  season: string
+  season: string,
 ): Promise<SquadGroup | undefined> => {
   try {
     const [title, seasonId] = season.split("_");
@@ -159,7 +159,7 @@ export const getSquad = async (
 };
 
 export const getPlayer = async (
-  player_id: string
+  player_id: string,
 ): Promise<Player | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -180,7 +180,7 @@ export const getPlayer = async (
 export const getClub = async (slug: string): Promise<Club | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `https://www.legaseriea.it/_next/data/0pQSbyByFdxlm81lnGxQP/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
+    url: `https://www.legaseriea.it/_next/data/s2Wzi8GwLml33nsTKll_L/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
   };
 
   try {
@@ -214,7 +214,7 @@ export const getCoppaRounds = async (season: string): Promise<Round[]> => {
 };
 
 export const getChampionships = async (
-  season: string
+  season: string,
 ): Promise<Championship[]> => {
   const [title, seasonId] = season.split("_");
 
