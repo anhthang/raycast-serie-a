@@ -74,7 +74,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
 
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `${endpoint}/stats/live/Classificacompleta?CAMPIONATO=A&STAGIONE=${title}&TURNO=UNICO&GIRONE=UNI`,
+    url: `${endpoint}/stats/Classificacompleta?CAMPIONATO=A&STAGIONE=${title}&TURNO=UNICO&GIRONE=UNI`,
   };
 
   try {
