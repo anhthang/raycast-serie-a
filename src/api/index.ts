@@ -8,7 +8,6 @@ import {
   SerieAMatchday,
   SerieASquad,
   SerieATable,
-  SerieATeams,
   Standing,
   Team,
   Player,
@@ -41,27 +40,6 @@ export const getMatchday = async (season: string): Promise<Matchday[]> => {
     const { data }: AxiosResponse<SerieAMatchday> = await axios(config);
 
     return data.data;
-  } catch (e) {
-    showFailureToast();
-
-    return [];
-  }
-};
-
-export const getTeams = async (): Promise<Team[]> => {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: `${endpoint}/widget/all-teams`,
-    params: {
-      lang: "en",
-      id_category: "157623",
-    },
-  };
-
-  try {
-    const { data }: AxiosResponse<SerieATeams> = await axios(config);
-
-    return data.data.body;
   } catch (e) {
     showFailureToast();
 
@@ -174,6 +152,30 @@ export const getPlayer = async (
     showFailureToast();
 
     return undefined;
+  }
+};
+
+export const getTeams = async (): Promise<Team[]> => {
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: "https://www.legaseriea.it/_next/data/s2Wzi8GwLml33nsTKll_L/en/serie-a/squadre.json?slug=serie-a&slug=squadre",
+  };
+
+  try {
+    const { data } = await axios(config);
+
+    const body = data?.pageProps?.page?.body;
+    if (Array.isArray(body)) {
+      const teams = body.find((o) => o.name === "NavbarTeam");
+
+      return teams ? teams.body : [];
+    }
+
+    return [];
+  } catch (error) {
+    showFailureToast();
+
+    return [];
   }
 };
 

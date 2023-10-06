@@ -22,14 +22,6 @@ export interface SerieAMatchday {
   code: number;
 }
 
-export interface SerieATeams {
-  success: boolean;
-  message: string;
-  errors: any[];
-  data: Teams;
-  code: number;
-}
-
 export interface SerieASquad {
   success: boolean;
   message: string;
