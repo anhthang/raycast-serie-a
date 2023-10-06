@@ -30,7 +30,7 @@ function showFailureToast() {
 const endpoint = "https://www.legaseriea.it/api";
 
 export const getMatchday = async (season: string): Promise<Matchday[]> => {
-  const [title, season_id] = season.split("_");
+  const [, season_id] = season.split("_");
   const config: AxiosRequestConfig = {
     method: "GET",
     url: `${endpoint}/season/${season_id}/championship/A/matchday?lang=${language}`,
@@ -48,7 +48,7 @@ export const getMatchday = async (season: string): Promise<Matchday[]> => {
 };
 
 export const getStandings = async (season: string): Promise<Standing[]> => {
-  const [title, season_id] = season.split("_");
+  const [title] = season.split("_");
 
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -80,7 +80,7 @@ export const getMatches = async (
   season: string,
   params: object,
 ): Promise<Match[]> => {
-  const [title, season_id] = season.split("_");
+  const [, season_id] = season.split("_");
 
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -110,7 +110,7 @@ export const getSquad = async (
   season: string,
 ): Promise<SquadGroup | undefined> => {
   try {
-    const [title, seasonId] = season.split("_");
+    const [title] = season.split("_");
 
     const hasCache = cache.has(team_name);
     if (!hasCache) {
@@ -197,7 +197,7 @@ export const getClub = async (slug: string): Promise<Club | undefined> => {
 };
 
 export const getCoppaRounds = async (season: string): Promise<Round[]> => {
-  const [title, seasonId] = season.split("_");
+  const [, seasonId] = season.split("_");
 
   const config: AxiosRequestConfig = {
     method: "GET",
@@ -218,7 +218,7 @@ export const getCoppaRounds = async (season: string): Promise<Round[]> => {
 export const getChampionships = async (
   season: string,
 ): Promise<Championship[]> => {
-  const [title, seasonId] = season.split("_");
+  const [, seasonId] = season.split("_");
 
   const config: AxiosRequestConfig = {
     method: "GET",

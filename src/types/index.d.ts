@@ -1,7 +1,7 @@
 export interface SerieAFixtureAndResult {
   success: boolean;
   message: string;
-  errors: any[];
+  errors: unknown[];
   data: Match[];
   code: number;
 }
@@ -9,7 +9,7 @@ export interface SerieAFixtureAndResult {
 export interface SerieATable {
   success: boolean;
   message: string;
-  errors: any[];
+  errors: unknown[];
   data: Standing[];
   code: number;
 }
@@ -17,7 +17,7 @@ export interface SerieATable {
 export interface SerieAMatchday {
   success: boolean;
   message: string;
-  errors: any[];
+  errors: unknown[];
   data: Matchday[];
   code: number;
 }
@@ -25,7 +25,7 @@ export interface SerieAMatchday {
 export interface SerieASquad {
   success: boolean;
   message: string;
-  errors: any[];
+  errors: unknown[];
   data: SquadGroup;
   code: number;
 }
@@ -33,7 +33,7 @@ export interface SerieASquad {
 export interface SerieAPlayer {
   success: boolean;
   message: string;
-  errors: any[];
+  errors: unknown[];
   data: Player[];
   code: number;
 }
