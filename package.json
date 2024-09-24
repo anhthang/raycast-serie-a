@@ -7,6 +7,8 @@
   "author": "anhthang",
   "license": "MIT",
   "categories": [
+    "Productivity",
+    "Data",
     "Fun"
   ],
   "commands": [
@@ -64,10 +66,19 @@
           "value": "it"
         }
       ]
+    },
+    {
+      "name": "apikey",
+      "title": "API Key",
+      "description": "API key for accessing statistics data.",
+      "required": false,
+      "type": "textfield",
+      "default": "8IxcoKe4g5D2S4pnW5DYI"
     }
   ],
   "dependencies": {
     "@raycast/api": "^1.59.0",
+    "@raycast/utils": "^1.17.0",
     "@types/lodash.groupby": "^4.6.7",
     "axios": "^1.5.1",
     "date-fns": "^2.30.0",
@@ -75,15 +86,18 @@
     "lodash.groupby": "^4.6.0"
   },
   "devDependencies": {
-    "@types/json2md": "^1.5.2",
-    "@types/node": "~20.8.2",
-    "@types/react": "^18.2.25",
-    "@typescript-eslint/eslint-plugin": "^6.7.4",
-    "@typescript-eslint/parser": "^6.7.4",
-    "eslint": "^8.50.0",
-    "eslint-config-prettier": "^9.0.0",
-    "react-devtools": "^4.28.4",
-    "typescript": "^5.2.2"
+    "@eslint/js": "^9.11.1",
+    "@raycast/eslint-config": "^1.0.11",
+    "@types/json2md": "^1.5.4",
+    "@types/node": "~22.6.1",
+    "@types/react": "^18.3.8",
+    "eslint": "^9.11.1",
+    "eslint-config-prettier": "^9.1.0",
+    "eslint-plugin-react": "^7.36.1",
+    "prettier": "^3.3.3",
+    "react-devtools": "^5.2.0",
+    "typescript": "^5.6.2",
+    "typescript-eslint": "^8.7.0"
   },
   "scripts": {
     "build": "ray build -e dist",

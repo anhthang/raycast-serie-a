@@ -1,31 +1,24 @@
+import { Cache, getPreferenceValues } from "@raycast/api";
+import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
-import { Cache, getPreferenceValues, showToast, Toast } from "@raycast/api";
 import {
+  Club,
   Match,
   Matchday,
-  SquadGroup,
+  Player,
   SerieAFixtureAndResult,
   SerieAMatchday,
+  SerieAPlayer,
   SerieASquad,
   SerieATable,
+  SquadGroup,
   Standing,
   Team,
-  Player,
-  SerieAPlayer,
-  Club,
 } from "../types";
 import { Championship, CoppaRounds, Round } from "../types/coppa";
 
-const { language } = getPreferenceValues();
+const { apikey, language } = getPreferenceValues();
 const cache = new Cache();
-
-function showFailureToast() {
-  showToast(
-    Toast.Style.Failure,
-    "Something went wrong",
-    "Please try again later",
-  );
-}
 
 const endpoint = "https://www.legaseriea.it/api";
 
@@ -41,7 +34,7 @@ export const getMatchday = async (season: string): Promise<Matchday[]> => {
 
     return data.data;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -70,7 +63,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
 
     return data.data;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -99,7 +92,7 @@ export const getMatches = async (
 
     return data.data;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -130,7 +123,7 @@ export const getSquad = async (
 
     return data.data;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return undefined;
   }
@@ -149,7 +142,7 @@ export const getPlayer = async (
 
     return data.data.reverse()[0];
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return undefined;
   }
@@ -158,7 +151,7 @@ export const getPlayer = async (
 export const getTeams = async (): Promise<Team[]> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: "https://www.legaseriea.it/_next/data/s2Wzi8GwLml33nsTKll_L/en/serie-a/squadre.json?slug=serie-a&slug=squadre",
+    url: `https://www.legaseriea.it/_next/data/${apikey}/en/serie-a/squadre.json?slug=serie-a&slug=squadre`,
   };
 
   try {
@@ -172,8 +165,8 @@ export const getTeams = async (): Promise<Team[]> => {
     }
 
     return [];
-  } catch (error) {
-    showFailureToast();
+  } catch (e) {
+    showFailureToast(e);
 
     return [];
   }
@@ -182,7 +175,7 @@ export const getTeams = async (): Promise<Team[]> => {
 export const getClub = async (slug: string): Promise<Club | undefined> => {
   const config: AxiosRequestConfig = {
     method: "GET",
-    url: `https://www.legaseriea.it/_next/data/s2Wzi8GwLml33nsTKll_L/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
+    url: `https://www.legaseriea.it/_next/data/${apikey}/en/team/${slug}/club.json?slug=team&slug=${slug}&slug=club`,
   };
 
   try {
@@ -190,7 +183,7 @@ export const getClub = async (slug: string): Promise<Club | undefined> => {
 
     return data?.pageProps?.page?.context;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return undefined;
   }
@@ -209,7 +202,7 @@ export const getCoppaRounds = async (season: string): Promise<Round[]> => {
 
     return data.data;
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }
@@ -230,7 +223,7 @@ export const getChampionships = async (
 
     return data.data?.body || [];
   } catch (e) {
-    showFailureToast();
+    showFailureToast(e);
 
     return [];
   }

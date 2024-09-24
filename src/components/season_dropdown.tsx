@@ -1,6 +1,7 @@
 import { Grid, List } from "@raycast/api";
 
 export const seasons = [
+  "2024-25_264681",
   "2023-24_157617",
   "2022-23_150052",
   "2021-22_30030",

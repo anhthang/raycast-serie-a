@@ -7,8 +7,9 @@ import {
   Image,
   List,
 } from "@raycast/api";
+import { showFailureToast } from "@raycast/utils";
 import { format } from "date-fns";
-import { Broadcaster, Match, Matchday } from "../types";
+import { Broadcaster, Match } from "../types";
 
 const { language } = getPreferenceValues();
 
@@ -40,8 +41,8 @@ export default function Matchday(props: PropsType) {
               });
             });
           }
-        } catch (error) {
-          // do nothing
+        } catch (e) {
+          showFailureToast(e);
         }
 
         let weather;
@@ -57,7 +58,7 @@ export default function Matchday(props: PropsType) {
             tooltip: weather.icon_description,
           });
         } catch (e) {
-          // ignore
+          showFailureToast(e);
         }
 
         const tbc = !match.match_hm || match.match_hm === "00:00:00";

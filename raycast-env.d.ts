@@ -9,7 +9,9 @@
 
 type ExtensionPreferences = {
   /** Language - Your preferred language. */
-  "language": "en" | "it"
+  "language": "en" | "it",
+  /** API Key - API key for accessing statistics data. */
+  "apikey": string
 }
 
 /** Preferences accessible in all the extension's commands */
@@ -42,11 +44,4 @@ declare namespace Arguments {
 }
 
 
-declare module "swift:*" {
-  function run<T = unknown, U = any>(command: string, input?: U): Promise<T>;
-  export default run;
-	export class SwiftError extends Error {
-    stderr: string;
-    stdout: string;
-  }
-}
+

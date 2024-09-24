@@ -1,8 +1,8 @@
 import { Action, ActionPanel, Detail, getPreferenceValues } from "@raycast/api";
+import { usePromise } from "@raycast/utils";
 import json2md from "json2md";
-import { useEffect, useState } from "react";
 import { getPlayer } from "../api";
-import { Player, Squad } from "../types";
+import { Squad } from "../types";
 
 const { language } = getPreferenceValues();
 
@@ -29,23 +29,12 @@ const getFlagEmoji = (isoCode?: string) => {
 };
 
 export default function Player(props: Squad) {
-  const [player, setPlayer] = useState<Player>();
-  const [loading, setLoading] = useState<boolean>(false);
-
-  useEffect(() => {
-    setPlayer(undefined);
-    setLoading(true);
-
-    getPlayer(props.netco_id).then((data) => {
-      setPlayer(data);
-      setLoading(false);
-    });
-  }, [props.netco_id]);
+  const { data: player, isLoading } = usePromise(getPlayer, [props.netco_id]);
 
   return player ? (
     <Detail
       navigationTitle={`${player.CognomeNomeXL} | Profile & Stats`}
-      isLoading={loading}
+      isLoading={isLoading}
       markdown={json2md([
         { h1: player.CognomeNomeXL },
         {

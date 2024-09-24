@@ -1,21 +1,14 @@
-import { useEffect, useState } from "react";
-import { Team } from "./types";
-import { getTeams } from "./api";
-import { seasons } from "./components/season_dropdown";
 import { Action, ActionPanel, Grid, Icon } from "@raycast/api";
+import { usePromise } from "@raycast/utils";
+import { getTeams } from "./api";
 import ClubDetails from "./components/club";
+import { seasons } from "./components/season_dropdown";
 
 export default function Club() {
-  const [clubs, setClubs] = useState<Team[]>();
-
-  useEffect(() => {
-    getTeams().then((data) => {
-      setClubs(data);
-    });
-  }, []);
+  const { data: clubs, isLoading } = usePromise(getTeams, []);
 
   return (
-    <Grid throttle isLoading={!clubs} inset={Grid.Inset.Small}>
+    <Grid throttle isLoading={isLoading} inset={Grid.Inset.Small}>
       {clubs?.map((club) => {
         return (
           <Grid.Item
