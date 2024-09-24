@@ -2,7 +2,7 @@
   "$schema": "https://www.raycast.com/schemas/extension.json",
   "name": "serie-a",
   "title": "Lega Serie A",
-  "description": "The top league in Italy, the twenty best teams, standings, results, statistics.",
+  "description": "Stay up-to-date with the latest scores, and standings from the Italian Serie A football league.",
   "icon": "icon.png",
   "author": "anhthang",
   "license": "MIT",
@@ -15,36 +15,32 @@
     {
       "name": "table",
       "title": "Tables",
-      "subtitle": "Lega Serie A",
-      "description": "The ranking based on the latest results of the twenty best Italian teams, statistics and insights at your disposal.",
+      "description": "View the current Serie A standings, team statistics, and insights.",
       "mode": "view"
     },
     {
       "name": "result",
       "title": "Fixtures & Results",
-      "subtitle": "Lega Serie A",
-      "description": "All the latest results of all days of the Serie A championship, follow all the matches with the live commentary.",
+      "description": "Check match results, fixtures, and live commentary for Serie A games.",
       "mode": "view"
     },
     {
       "name": "club",
       "title": "Clubs",
-      "subtitle": "Lega Serie A",
-      "description": "View all the clubs engaged in Lega Serie A.",
+      "description": "Explore profiles of all Serie A clubs.",
       "mode": "view"
     },
     {
       "name": "coppa",
       "title": "Coppa Italia",
-      "subtitle": "Lega Serie A",
       "icon": "coppa_icon.png",
-      "description": "Follow all the latest Coppa Italia football fixtures and results.",
+      "description": "Follow the latest Coppa Italia fixtures and results.",
       "mode": "view"
     },
     {
       "name": "international",
-      "title": "International Championships",
-      "description": "Follow all the latest Italian teams football fixtures in international championships.",
+      "title": "International Matches",
+      "description": "Track Italian teams in international competitions.",
       "mode": "view"
     }
   ],
@@ -52,7 +48,7 @@
     {
       "name": "language",
       "title": "Language",
-      "description": "Your preferred language.",
+      "description": "Select your preferred language for the app interface.",
       "required": false,
       "type": "dropdown",
       "default": "en",
@@ -70,7 +66,7 @@
     {
       "name": "apikey",
       "title": "API Key",
-      "description": "API key for accessing statistics data.",
+      "description": "Enter API key to access detailed statistics and data.",
       "required": false,
       "type": "textfield",
       "default": "8IxcoKe4g5D2S4pnW5DYI"

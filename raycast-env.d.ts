@@ -8,9 +8,9 @@
 /* eslint-disable @typescript-eslint/ban-types */
 
 type ExtensionPreferences = {
-  /** Language - Your preferred language. */
+  /** Language - Select your preferred language for the app interface. */
   "language": "en" | "it",
-  /** API Key - API key for accessing statistics data. */
+  /** API Key - Enter API key to access detailed statistics and data. */
   "apikey": string
 }
 
