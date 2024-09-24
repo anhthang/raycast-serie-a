@@ -73,7 +73,7 @@ export default function ClubDetails(props: {
         <ActionPanel>
           <Action.Push
             title="Squad"
-            icon={Icon.Person}
+            icon={Icon.TwoPeople}
             target={<ClubSquad {...props} />}
           />
           <Action.OpenInBrowser title="Website" url={club.website} />
