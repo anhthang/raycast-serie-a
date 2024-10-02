@@ -1,40 +1,8 @@
-export interface SerieAFixtureAndResult {
+export interface SerieA<T> {
   success: boolean;
   message: string;
   errors: unknown[];
-  data: Match[];
-  code: number;
-}
-
-export interface SerieATable {
-  success: boolean;
-  message: string;
-  errors: unknown[];
-  data: Standing[];
-  code: number;
-}
-
-export interface SerieAMatchday {
-  success: boolean;
-  message: string;
-  errors: unknown[];
-  data: Matchday[];
-  code: number;
-}
-
-export interface SerieASquad {
-  success: boolean;
-  message: string;
-  errors: unknown[];
-  data: SquadGroup;
-  code: number;
-}
-
-export interface SerieAPlayer {
-  success: boolean;
-  message: string;
-  errors: unknown[];
-  data: Player[];
+  data: T;
   code: number;
 }
 
@@ -246,62 +214,6 @@ export enum Role {
   Centrocampista = "Centrocampista",
   Difensore = "Difensore",
   Portiere = "Portiere",
-}
-
-export interface Player {
-  ALLAGIORNATA: number;
-  Ammonizioni: number;
-  Attacchi: number;
-  CAMPIONATO: Campionato;
-  CODGIOCATORE: Codgiocatore;
-  CODRUOLO: Codruolo;
-  CODSQUADRA: Codsquadra;
-  Cognome: Cognome;
-  CognomeNomeXL: CognomeNomeXL;
-  DOPPIEAMMONI: number;
-  DataNascita: DataNascita;
-  Diffidato: number;
-  EspulTot: number;
-  Espulsioni: number;
-  IDOptaGiocatore: IDOptaGiocatore;
-  IMMAGIGIOCAT: Immagigiocat;
-  MINUTI: number;
-  MVPMese: string;
-  MVPMeseENG: string;
-  NAssist: number;
-  NAssistVin: number;
-  NUMEROMAGLIA: string;
-  Nazionalita: Nazionalita;
-  Nome: Nome;
-  NomeInFormazione: NomeInFormazione;
-  OccasioniDaGol: number;
-  PALLERECUPER: number;
-  Parate: number;
-  ParateDe: number;
-  PassChiave: number;
-  Presenze: number;
-  ROSA: number;
-  Reti: number;
-  RetiSuRigore: number;
-  RetiSubite: number;
-  Ruolo: Ruolo;
-  STAGIONE: string;
-  Squadra: Squadra;
-  Squalificato?: number;
-  TIRI: number;
-  do_deleted: number;
-  do_inserted: number;
-  do_loaded: number;
-  do_updated: number;
-  player_active: string;
-  player_head_shot: string;
-  player_image: string;
-  player_medium_shot: string;
-  player_slug: PlayerSlug;
-  team_active: string;
-  team_image: string;
-  team_image_secondary: string;
-  team_slug: TeamSlug;
 }
 
 export interface Club {

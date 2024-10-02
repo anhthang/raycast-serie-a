@@ -5,12 +5,7 @@ import {
   Club,
   Match,
   Matchday,
-  Player,
-  SerieAFixtureAndResult,
-  SerieAMatchday,
-  SerieAPlayer,
-  SerieASquad,
-  SerieATable,
+  SerieA,
   SquadGroup,
   Standing,
   Team,
@@ -30,7 +25,7 @@ export const getMatchday = async (season: string): Promise<Matchday[]> => {
   };
 
   try {
-    const { data }: AxiosResponse<SerieAMatchday> = await axios(config);
+    const { data }: AxiosResponse<SerieA<Matchday[]>> = await axios(config);
 
     return data.data;
   } catch (e) {
@@ -49,7 +44,7 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
   };
 
   try {
-    const { data }: AxiosResponse<SerieATable> = await axios(config);
+    const { data }: AxiosResponse<SerieA<Standing[]>> = await axios(config);
 
     const squadCodes = data.data.reduce(
       (out: { [key: string]: string }, cur) => {
@@ -88,7 +83,7 @@ export const getMatches = async (
   };
 
   try {
-    const { data }: AxiosResponse<SerieAFixtureAndResult> = await axios(config);
+    const { data }: AxiosResponse<SerieA<Match[]>> = await axios(config);
 
     return data.data;
   } catch (e) {
@@ -119,28 +114,9 @@ export const getSquad = async (
       url: `${endpoint}/team/${teamCode}/players`,
     };
 
-    const { data }: AxiosResponse<SerieASquad> = await axios(config);
+    const { data }: AxiosResponse<SerieA<SquadGroup>> = await axios(config);
 
     return data.data;
-  } catch (e) {
-    showFailureToast(e);
-
-    return undefined;
-  }
-};
-
-export const getPlayer = async (
-  player_id: string,
-): Promise<Player | undefined> => {
-  const config: AxiosRequestConfig = {
-    method: "GET",
-    url: `${endpoint}/stats/Rosasquadra?CAMPIONATO=*&STAGIONE=*&CODGIOCATORE=${player_id}`,
-  };
-
-  try {
-    const { data }: AxiosResponse<SerieAPlayer> = await axios(config);
-
-    return data.data.reverse()[0];
   } catch (e) {
     showFailureToast(e);
 

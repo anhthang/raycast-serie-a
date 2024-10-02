@@ -8,14 +8,8 @@ import {
 import { usePromise } from "@raycast/utils";
 import { getSquad } from "../api";
 import { Squad } from "../types";
+import { getFlagEmoji, positionMap } from "../utils";
 import Player from "./player";
-
-const positionMap = new Map<string, string>([
-  ["P", "Goalkeeper"],
-  ["D", "Defender"],
-  ["C", "Midfielder"],
-  ["A", "Striker"],
-]);
 
 const { language } = getPreferenceValues();
 
@@ -50,6 +44,7 @@ export default function ClubSquad(props: {
                       source: member.medium_shot,
                       fallback: "player_placeholder.png",
                     }}
+                    accessory={{ icon: getFlagEmoji(member.nationality) }}
                     actions={
                       <ActionPanel>
                         <Action.Push
