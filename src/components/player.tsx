@@ -1,5 +1,5 @@
 import { Action, ActionPanel, Detail, getPreferenceValues } from "@raycast/api";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import json2md from "json2md";
 import { Squad } from "../types";
 import { getFlagEmoji, positionMap } from "../utils";
@@ -27,7 +27,7 @@ export default function Player(player: Squad) {
           />
           <Detail.Metadata.Label
             title="Date of Birth"
-            text={format(new Date(player.birth_day), "dd MMM yyyy")}
+            text={formatDate(player.birth_day, "dd MMM yyyy")}
           />
           <Detail.Metadata.Separator />
           <Detail.Metadata.Label

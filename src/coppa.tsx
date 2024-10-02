@@ -1,6 +1,6 @@
 import { List } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import groupBy from "lodash.groupby";
 import { useState } from "react";
 import { getCoppaRounds, getMatches } from "./api";
@@ -24,7 +24,7 @@ export default function Fixture() {
   );
 
   const matchday = groupBy(matches, (m) =>
-    format(new Date(m.date_time), "eeee, dd MMM yyyy"),
+    formatDate(m.date_time, "eeee, dd MMM yyyy"),
   );
 
   return (

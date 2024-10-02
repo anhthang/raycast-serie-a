@@ -1,6 +1,6 @@
 import { Action, ActionPanel, Icon, List } from "@raycast/api";
 import { usePromise } from "@raycast/utils";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import groupBy from "lodash.groupby";
 import { useState } from "react";
 import { getMatchday, getMatches } from "./api";
@@ -36,7 +36,7 @@ export default function Fixture() {
   );
 
   const categories = groupBy(matches, (m) =>
-    format(new Date(m.date_time), "dd MMM yyyy"),
+    formatDate(m.date_time, "dd MMM yyyy"),
   );
 
   const actionPanel = (

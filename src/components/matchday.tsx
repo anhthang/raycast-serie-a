@@ -8,7 +8,7 @@ import {
   List,
 } from "@raycast/api";
 import { showFailureToast } from "@raycast/utils";
-import { format } from "date-fns";
+import { formatDate } from "date-fns";
 import { Broadcaster, Match } from "../types";
 
 const { language } = getPreferenceValues();
@@ -82,7 +82,7 @@ export default function Matchday(props: PropsType) {
         return (
           <List.Item
             key={match.match_id}
-            title={tbc ? "TBC" : format(new Date(match.date_time), "HH:mm")}
+            title={tbc ? "TBC" : formatDate(match.date_time, "HH:mm")}
             subtitle={
               match.match_status === 2
                 ? `${match.home_team_name} ${match.home_goal} - ${match.away_goal} ${match.away_team_name}`

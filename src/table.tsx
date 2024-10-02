@@ -32,7 +32,12 @@ export default function GetTables() {
         return (
           <List.Item
             key={team.Nome}
-            icon={team.team_image}
+            icon={{
+              source: {
+                light: team.team_image,
+                dark: team.team_image_secondary,
+              },
+            }}
             title={team.PosCls.toString()}
             subtitle={team.Nome}
             keywords={[team.Nome, team.NomeCompleto, team.NomeSintetico]}

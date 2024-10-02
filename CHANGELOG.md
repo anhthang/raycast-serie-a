@@ -1,6 +1,7 @@
 # Lega Serie A Changelog
 
-## [Asynchronous Efficiency] - 2024-09-24
+## [Standings Boost] - 2024-10-10
+- Updated standings to always display detailed statistics, including goals for/against, goal difference, and points.
 - Enhanced code maintainability and efficiency by utilizing the `usePromise` hook for asynchronous operations.
 
 ## [Tournament Tracker] - 2023-02-21
