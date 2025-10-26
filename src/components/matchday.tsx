@@ -30,16 +30,18 @@ export default function Matchday(props: PropsType) {
 
         let broadcasters: Broadcaster[];
         try {
-          broadcasters = JSON.parse(match.broadcasters);
-          if (match.match_status === 0) {
-            broadcasters.forEach((broadcaster) => {
-              accessories.push({
-                icon: {
-                  source: encodeURI(broadcaster.image),
-                },
-                tooltip: broadcaster.name,
+          if (match.broadcasters) {
+            broadcasters = JSON.parse(match.broadcasters);
+            if (match.match_status === 0) {
+              broadcasters.forEach((broadcaster) => {
+                accessories.push({
+                  icon: {
+                    source: encodeURI(broadcaster.image),
+                  },
+                  tooltip: broadcaster.name,
+                });
               });
-            });
+            }
           }
         } catch (e) {
           showFailureToast(e);
@@ -47,16 +49,18 @@ export default function Matchday(props: PropsType) {
 
         let weather;
         try {
-          weather = JSON.parse(match.weather);
-          accessories.push({
-            icon: {
-              source: {
-                light: weather.icon_day.image_day,
-                dark: weather.icon_day.image_night,
+          if (match.weather) {
+            weather = JSON.parse(match.weather);
+            accessories.push({
+              icon: {
+                source: {
+                  light: weather.icon_day.image_day,
+                  dark: weather.icon_day.image_night,
+                },
               },
-            },
-            tooltip: weather.icon_description,
-          });
+              tooltip: weather.icon_description,
+            });
+          }
         } catch (e) {
           showFailureToast(e);
         }

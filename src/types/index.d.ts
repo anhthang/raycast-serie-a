@@ -80,7 +80,7 @@ export interface Match {
   away_team_name: string;
   away_team_short_name: string;
   away_team_url: string;
-  broadcasters: string;
+  broadcasters?: string;
   category_status: string;
   championship_background_image: string;
   championship_category_id: number;
@@ -135,7 +135,7 @@ export interface Match {
   venue_image: string;
   venue_name: string;
   venue_plan_image: string;
-  weather: string;
+  weather?: string;
 }
 
 export interface Broadcaster {
