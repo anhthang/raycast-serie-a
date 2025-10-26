@@ -1,11 +1,13 @@
-import { Color, List } from "@raycast/api";
+import { Color, Icon, Image, List } from "@raycast/api";
 import { Standing } from "../types";
 
 export default function StandingV3(props: {
   standing: Standing[] | undefined;
 }) {
   return props.standing?.map((team) => {
-    const accessories: List.Item.Accessory[] = [];
+    const accessory: List.Item.Accessory = {
+      text: "",
+    };
 
     let title = "";
     const results: List.Item.Detail.Metadata.Label.Props[] = [];
@@ -20,13 +22,11 @@ export default function StandingV3(props: {
         // case "team":
         //   break
         case "points":
-          accessories.push({
-            text: {
-              color: Color.PrimaryText,
-              value: String(stat.statsValue),
-            },
-            tooltip: "Points",
-          });
+          accessory.text = {
+            color: Color.PrimaryText,
+            value: String(stat.statsValue),
+          };
+          accessory.tooltip = stat.statsLabel;
           break;
         case "matches-played":
         case "win":
@@ -45,8 +45,28 @@ export default function StandingV3(props: {
             text: String(stat.statsValue),
           });
           break;
-        // case "movement":
-        //   break
+        case "movement":
+          {
+            let icon: Image.ImageLike = Icon.Dot;
+
+            if (stat.statsValue === "down") {
+              icon = {
+                source: Icon.ChevronDownSmall,
+                tintColor: Color.Red,
+              };
+            }
+
+            if (stat.statsValue === "up") {
+              icon = {
+                source: Icon.ChevronUpSmall,
+                tintColor: Color.Green,
+              };
+            }
+
+            accessory.icon = icon;
+          }
+
+          break;
         case "form":
           if (Array.isArray(stat.statsValue)) {
             stat.statsValue.forEach((val) => {
@@ -85,7 +105,7 @@ export default function StandingV3(props: {
           team.mediaName,
           team.officialName,
         ]}
-        accessories={accessories}
+        accessories={[accessory]}
         detail={
           <List.Item.Detail
             metadata={

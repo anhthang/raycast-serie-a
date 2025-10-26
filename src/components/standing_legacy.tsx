@@ -59,7 +59,7 @@ export default function StandingLegacy(props: {
                 />
                 <List.Item.Detail.Metadata.Label
                   title="Goal Difference"
-                  text={String((team.RETIFATTE - team.RETISUBITE))}
+                  text={String(team.RETIFATTE - team.RETISUBITE)}
                 />
               </List.Item.Detail.Metadata>
             }
