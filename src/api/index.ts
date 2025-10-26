@@ -3,6 +3,7 @@ import { showFailureToast } from "@raycast/utils";
 import axios, { AxiosRequestConfig, AxiosResponse } from "axios";
 import {
   Club,
+  DataV3,
   Match,
   Matchday,
   SerieA,
@@ -57,6 +58,25 @@ export const getStandings = async (season: string): Promise<Standing[]> => {
     cache.set(season, JSON.stringify(squadCodes));
 
     return data.data;
+  } catch (e) {
+    showFailureToast(e);
+
+    return [];
+  }
+};
+
+export const getStandingsV3 = async (season: string): Promise<Standing[]> => {
+  const [, , season_id] = season.split("_");
+
+  const config: AxiosRequestConfig = {
+    method: "GET",
+    url: `${endpoint}/stats/v3/live/overall?season_id=serie-a::Football_Season::${season_id}`,
+  };
+
+  try {
+    const { data }: AxiosResponse<SerieA<DataV3>> = await axios(config);
+
+    return data.data.standings[0].teams;
   } catch (e) {
     showFailureToast(e);
 

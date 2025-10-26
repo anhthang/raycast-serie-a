@@ -21,7 +21,43 @@ export enum CategoryStatus {
   ToBePlayed = "TO BE PLAYED",
 }
 
+export interface DataV3 {
+  apiCallRequestTime: Date;
+  standings: TableStanding[];
+}
+
+export interface TableStanding {
+  apiCallRequestTime: Date;
+  competition: Competition;
+  editorials: unknown[];
+  legenda: unknown[];
+  teams: Standing[];
+  type: string;
+}
+
 export interface Standing {
+  achievementStatuses: AchievementStatus[];
+  acronymName: string;
+  acronymNameLocalized: string;
+  countryCode: null;
+  isTeamFake: boolean;
+  mediaName: string;
+  mediaShortName: string;
+  note: string;
+  officialName: string;
+  providerId: string;
+  qualification: Qualification | null;
+  shortName: string;
+  stadium: null;
+  stats: Stat[];
+  teamId: string;
+  teamType: null;
+  team_active: string;
+  team_id: string;
+  team_image: string;
+  team_image_secondary: string;
+  team_slug: string;
+  // legacy api
   CAMPIONATO: string;
   CODSQUADRA: string;
   GIRONE: string;
@@ -136,6 +172,44 @@ export interface Match {
   venue_name: string;
   venue_plan_image: string;
   weather?: string;
+}
+
+export interface Competition {
+  acronymName: string;
+  competitionId: string;
+  endDateUtc: null;
+  name: string;
+  officialName: string;
+  providerId: string;
+  seasonId: string;
+  seasonName: string;
+  shortName: string;
+  startDateUtc: null;
+}
+
+export interface Qualification {
+  qualificationId: number;
+  qualificationLabel: string;
+}
+
+export interface AchievementStatus {
+  statusLabel: string;
+  typeLabel: string;
+}
+
+export interface Stat {
+  statsId: string;
+  statsLabel: string;
+  statsLabelAbbreviation: string;
+  statsUnit: null;
+  statsUnitAbbreviation: null;
+  statsValue: StatsValue[] | string | number | null;
+}
+
+export interface StatsValue {
+  formLabel: string;
+  formLabelAbbreviation: string;
+  formType: string;
 }
 
 export interface Broadcaster {
