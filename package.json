@@ -73,7 +73,7 @@
       "description": "Enter API key to access detailed statistics and data.",
       "required": false,
       "type": "textfield",
-      "default": "8IxcoKe4g5D2S4pnW5DYI"
+      "default": "6ec86554c866385c5e61216867c1dd3d7fc25cc6"
     }
   ],
   "dependencies": {
